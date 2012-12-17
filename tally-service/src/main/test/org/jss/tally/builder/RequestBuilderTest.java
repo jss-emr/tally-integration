@@ -19,40 +19,11 @@ public class RequestBuilderTest extends TestCase {
     public void shouldCreateNewLedgerRequestWithPatientDataPopulated() throws Exception {
         Ledger ledger = new Ledger("RamSingh","abcd1234","JSS");
         String requestXml = requestBuilder.buildNewLedgerRequest(ledger);
-        assertEquals("<ENVELOPE>\n" +
-                "    <HEADER>\n" +
-                "        <TALLYREQUEST>Import Data</TALLYREQUEST>\n" +
-                "    </HEADER>\n" +
-                "    <BODY>\n" +
-                "    <IMPORTDATA>\n" +
-                "        <REQUESTDESC>\n" +
-                "            <REPORTNAME>All Masters</REPORTNAME>\n" +
-                "            <STATICVARIABLES>\n" +
-                "                <SVCURRENTCOMPANY>JSS</SVCURRENTCOMPANY>\n" +
-                "            </STATICVARIABLES>\n" +
-                "        </REQUESTDESC>\n" +
-                "        <REQUESTDATA>\n" +
-                "            <!-- Create Ledger for Patient -->\n" +
-                "            <TALLYMESSAGE xmlns:UDF=\"TallyUDF\">\n" +
-                "                <LEDGER NAME=\"RamSingh\" ACTION=\"Create\">\n" +
-                "                    <NAME.LIST>\n" +
-                "                        <NAME>RamSingh</NAME>\n" +
-                "                        <ALIAS>abcd1234</ALIAS>\n" +
-                "                    </NAME.LIST>\n" +
-                "                    <PARENT>Sundry Debtors</PARENT>\n" +
-                "                    <ISBILLWISEON>Yes</ISBILLWISEON>\n" +
-                "                    <AFFECTSSTOCK>Yes</AFFECTSSTOCK>\n" +
-                "                    <OPENINGBALANCE>0</OPENINGBALANCE>\n" +
-                "                    <USEFORVAT>NO</USEFORVAT>\n" +
-                "                    <TAXCLASSIFICATIONNAME></TAXCLASSIFICATIONNAME>\n" +
-                "                </LEDGER>\n" +
-                "            </TALLYMESSAGE>\n" +
-                "        </REQUESTDATA>\n" +
-                "    </IMPORTDATA>\n" +
-                "    </BODY>\n" +
-                "</ENVELOPE>\n".trim(),
-                requestXml.trim());
+        String requestXmlForComparison = requestXml.replace("\n", " ");
 
-
+        assertTrue(requestXmlForComparison.matches(".*<\\s*NAME\\s*>\\s*" + ledger.getPatientName() + "\\s*<\\s*/\\s*NAME\\s*>.*"));
+        assertTrue(requestXmlForComparison.matches(".*<\\s*LEDGER\\s*NAME\\s*=\\s*\"" + ledger.getPatientName() + "\".*"));
+        assertTrue(requestXmlForComparison.matches(".*<SVCURRENTCOMPANY>\\s*" + ledger.getCompany()+ "\\s*</SVCURRENTCOMPANY>.*"));
+        assertTrue(requestXmlForComparison.matches(".*<\\s*NAME\\s*>\\s*RamSingh\\s*<\\s*/\\s*NAME\\s*>.*"));
     }
 }

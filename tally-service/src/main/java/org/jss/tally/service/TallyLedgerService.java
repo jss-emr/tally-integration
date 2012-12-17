@@ -5,8 +5,9 @@ import org.jss.tally.builder.RequestBuilder;
 import org.jss.tally.domain.Ledger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.convert.Property;
 import org.springframework.stereotype.Component;
+
+import java.util.Properties;
 
 @Component
 public class TallyLedgerService {
@@ -14,18 +15,18 @@ public class TallyLedgerService {
     private RequestBuilder requestBuilder;
     private HttpClient httpClient;
 
-    @Qualifier("tallyServiceProperties")
-    private Property tallyServiceProperties;
+    private Properties tallyServiceProperties;
 
     @Autowired
-    public TallyLedgerService(RequestBuilder requestBuilder, HttpClient httpClient){
+    public TallyLedgerService(RequestBuilder requestBuilder, HttpClient httpClient, @Qualifier("tallyServiceProperties") Properties tallyServiceProperties) {
         this.requestBuilder = requestBuilder;
         this.httpClient = httpClient;
+        this.tallyServiceProperties = tallyServiceProperties;
     }
 
     public void createLedger(Ledger ledger) {
         String requestXml = requestBuilder.buildNewLedgerRequest(ledger);
-        String url = "http://localhost:9000";
+        String url = (String) tallyServiceProperties.getProperty("tallyUrl");
         httpClient.execute(url,requestXml);
     }
 }
