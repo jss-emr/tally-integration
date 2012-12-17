@@ -1,0 +1,36 @@
+<ENVELOPE>
+    <HEADER>
+        <TALLYREQUEST>Import Data</TALLYREQUEST>
+    </HEADER>
+    <BODY>
+    <IMPORTDATA>
+        <REQUESTDESC>
+            <REPORTNAME>All Masters</REPORTNAME>
+            <STATICVARIABLES>
+                <SVCURRENTCOMPANY>$company</SVCURRENTCOMPANY>
+            </STATICVARIABLES>
+        </REQUESTDESC>
+        <REQUESTDATA>
+            <!-- Create Ledger for Patient -->
+            <TALLYMESSAGE xmlns:UDF="TallyUDF">
+                <LEDGER NAME="$patientname" ACTION="Create">
+                    <NAME.LIST>
+                        <NAME>$patientname</NAME>
+                        <ALIAS>$patientid</ALIAS>
+                    </NAME.LIST>
+                    <PARENT>Sundry Debtors</PARENT>
+                    <ISBILLWISEON>Yes</ISBILLWISEON>
+                    <AFFECTSSTOCK>Yes</AFFECTSSTOCK>
+                    <OPENINGBALANCE>0</OPENINGBALANCE>
+                    <USEFORVAT>NO</USEFORVAT>
+                    <TAXCLASSIFICATIONNAME></TAXCLASSIFICATIONNAME>
+                </LEDGER>
+            </TALLYMESSAGE>
+        </REQUESTDATA>
+    </IMPORTDATA>
+    </BODY>
+</ENVELOPE>
+
+
+
+
