@@ -65,14 +65,14 @@
             <version>1.6.0</version>
         </dependency>
         <dependency>
-            <groupId>tally-service</groupId>
+            <groupId>tally-integration</groupId>
             <artifactId>tally-service</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test-mvc</artifactId>
-            <version>1.0.0.BUILD-SNAPSHOT</version>
+            <version>1.0.0.M2</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
