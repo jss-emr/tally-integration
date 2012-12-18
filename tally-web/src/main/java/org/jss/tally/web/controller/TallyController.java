@@ -6,10 +6,7 @@ import org.jss.tally.service.TallyLedgerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -27,12 +24,12 @@ public class TallyController {
     }
 
     @RequestMapping(value = "/patient/create", method = RequestMethod.POST,headers="Accept=application/json")
-    public @ResponseBody ResponseEntity<String> createLedger(HttpEntity<String> requestEntity,@RequestBody Ledger ledger) throws IOException {
-        logger.info(requestEntity.getBody());
+    public @ResponseBody ResponseEntity<String> createLedger(@RequestParam String patientName, @RequestParam String patientId, @RequestParam String company) throws IOException {
+        //logger.info(requestEntity.getBody());
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setContentType(MediaType.APPLICATION_JSON);
 
-        ledgerService.createLedger(ledger);
+        ledgerService.createLedger(new Ledger(patientName,patientId,company));
 
         return new ResponseEntity<String>(responseHeaders,HttpStatus.OK)  ;
     }
