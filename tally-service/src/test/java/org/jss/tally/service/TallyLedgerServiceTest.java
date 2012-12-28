@@ -1,6 +1,5 @@
 package org.jss.tally.service;
 
-import junit.framework.TestCase;
 import org.jss.http.client.HttpClient;
 import org.jss.tally.builder.RequestBuilder;
 import org.jss.tally.domain.Ledger;
@@ -14,16 +13,13 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-
 public class TallyLedgerServiceTest {
 
+    TallyLedgerService ledgerService;
     @Mock
     RequestBuilder requestBuilder;
-    TallyLedgerService ledgerService;
-
     @Mock
     HttpClient httpClient;
-
     @Mock
     Properties tallyServiceProperties;
 
@@ -44,6 +40,5 @@ public class TallyLedgerServiceTest {
 
         ledgerService.createLedger(ledger);
         verify(httpClient).post(tallyUrl, tallyXmlRequest);
-
     }
 }

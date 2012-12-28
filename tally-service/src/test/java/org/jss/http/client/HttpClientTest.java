@@ -1,9 +1,7 @@
 package org.jss.http.client;
 
-import junit.framework.TestCase;
 import org.jss.tally.builder.RequestBuilder;
 import org.jss.tally.domain.Ledger;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +15,8 @@ public class HttpClientTest {
     @Autowired
     private RequestBuilder requestBuilder;
 
-    @Test @Ignore
-    public void asdf() {
+    @Test
+    public void shouldMakePostAndReturnResponse() {
         String requestXml = createRequest();
 
         String url = "http://172.18.2.2:9000";

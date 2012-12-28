@@ -9,15 +9,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 
 @Component
 public class HttpClient {
     Logger logger = Logger.getLogger(HttpClient.class);
 
-    public void post(String url, String formPostData) {
+    public String post(String url, String formPostData) {
         try {
             logger.debug("Post Data: " + formPostData);
             URL serviceUrl = new URL(url);
@@ -30,8 +28,8 @@ public class HttpClient {
 
             String output = readOutput(conn);
             logger.debug("Post Data output: " + output);
-
             wr.close();
+            return output;
         } catch (Exception e) {
             logger.error("Could not post  to " + url, e);
             logger.error("Post data: " + formPostData);
