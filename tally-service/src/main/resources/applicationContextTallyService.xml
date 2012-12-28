@@ -11,14 +11,8 @@
 
     <context:spring-configured/>
     <context:annotation-config/>
-    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
-        <constructor-arg>
-            <bean class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory">
-                <property name="connectTimeout" value="3000"/>
-                <property name="readTimeout" value="3000"/>
-            </bean>
-        </constructor-arg>
-    </bean>
+    <context:component-scan base-package="org.jss"/>
+
     <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
         <property name="velocityProperties">
             <value>
@@ -27,6 +21,7 @@
             </value>
         </property>
     </bean>
+
     <bean id="requestBuilder" class="org.jss.tally.builder.RequestBuilder">
         <constructor-arg ref="velocityEngine"/>
     </bean>

@@ -1,20 +1,22 @@
 package org.jss.tally.web.controller;
 
-import junit.framework.TestCase;
+import org.joda.time.DateTime;
 import org.jss.tally.domain.Ledger;
 import org.jss.tally.service.TallyLedgerService;
 import org.jss.test.utils.MVCTestUtils;
 import org.junit.Before;
+import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.springframework.test.web.server.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.server.result.MockMvcResultMatchers.status;
 
 
-public class TallyControllerTest extends TestCase {
+public class TallyControllerTest{
 
     TallyController controller;
     @Mock
@@ -24,11 +26,12 @@ public class TallyControllerTest extends TestCase {
     public void setUp() throws Exception {
         initMocks(this);
     }
-    //@Test
-    public void testshouldCallLedgerServiceWithParameters() throws Exception {
+
+    @Test
+    public void shouldCallLedgerServiceWithParameters() throws Exception {
         controller = new TallyController(tallyLedgerService);
 
-        String name = "RamSingh";
+        String name = "RamSingh"+ DateTime.now().getMillis();
         String patientId = "123456";
         String company = "JSS";
         MVCTestUtils.mockMvc(controller).perform(post("/tally/patient/create").param("patientName", name).

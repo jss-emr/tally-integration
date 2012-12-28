@@ -7,7 +7,6 @@
         <version>1.0</version>
     </parent>
 
-
     <groupId>tally-integration</groupId>
     <artifactId>tally-web</artifactId>
     <packaging>war</packaging>
@@ -99,6 +98,12 @@
             <version>1.0.2</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <finalName>tally-webservice</finalName>
@@ -130,7 +135,7 @@
                         </systemProperty>
                     </systemProperties>
                     <webAppConfig>
-                        <contextPath>/ananya-care</contextPath>
+                        <contextPath>/</contextPath>
                     </webAppConfig>
                     <stopKey>secret</stopKey>
                     <stopPort>6669</stopPort>

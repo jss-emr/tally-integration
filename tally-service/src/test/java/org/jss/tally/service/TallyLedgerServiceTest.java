@@ -1,5 +1,6 @@
 package org.jss.tally.service;
 
+import junit.framework.TestCase;
 import org.jss.http.client.HttpClient;
 import org.jss.tally.builder.RequestBuilder;
 import org.jss.tally.domain.Ledger;
@@ -42,7 +43,7 @@ public class TallyLedgerServiceTest {
         when(tallyServiceProperties.getProperty("tallyUrl")).thenReturn(tallyUrl);
 
         ledgerService.createLedger(ledger);
-        verify(httpClient).execute(tallyUrl, tallyXmlRequest);
+        verify(httpClient).post(tallyUrl, tallyXmlRequest);
 
     }
 }

@@ -5,11 +5,11 @@ import org.jss.tally.builder.RequestBuilder;
 import org.jss.tally.domain.Ledger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Properties;
 
-@Component
+@Service
 public class TallyLedgerService {
 
     private RequestBuilder requestBuilder;
@@ -26,7 +26,7 @@ public class TallyLedgerService {
 
     public void createLedger(Ledger ledger) {
         String requestXml = requestBuilder.buildNewLedgerRequest(ledger);
-        String url = (String) tallyServiceProperties.getProperty("tallyUrl");
-        httpClient.execute(url,requestXml);
+        String url = tallyServiceProperties.getProperty("tallyUrl");
+        httpClient.post(url, requestXml);
     }
 }

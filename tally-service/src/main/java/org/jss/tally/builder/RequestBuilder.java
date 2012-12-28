@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.StringWriter;
 
-@Component
 public class RequestBuilder {
     private VelocityEngine velocityEngine;
 
