@@ -1,5 +1,7 @@
 package org.jss.tally.service;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.jss.http.client.HttpClient;
 import org.jss.tally.builder.RequestBuilder;
 import org.jss.tally.domain.Ledger;
@@ -14,6 +16,8 @@ public class TallyLedgerService {
 
     private RequestBuilder requestBuilder;
     private HttpClient httpClient;
+    Logger logger = Logger.getLogger(TallyLedgerService.class);
+
 
     private Properties tallyServiceProperties;
 
@@ -25,8 +29,17 @@ public class TallyLedgerService {
     }
 
     public void createLedger(Ledger ledger) {
+        if(StringUtils.isBlank(ledger.getCompany())) {
+            ledger = addDefaultCompanyInformation(ledger);
+        }
         String requestXml = requestBuilder.buildNewLedgerRequest(ledger);
         String url = tallyServiceProperties.getProperty("tallyUrl");
         httpClient.post(url, requestXml);
+    }
+
+    private Ledger addDefaultCompanyInformation(Ledger ledger) {
+        String defaultCompany = tallyServiceProperties.getProperty("defaultTallyCompany");
+        logger.info("Setting company name to " + defaultCompany);
+        return new Ledger(ledger.getPatientName(), ledger.getPatientId(), defaultCompany);
     }
 }

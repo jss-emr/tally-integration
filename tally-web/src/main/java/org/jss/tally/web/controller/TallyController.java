@@ -24,8 +24,7 @@ public class TallyController {
     }
 
     @RequestMapping(value = "/patient/create", method = RequestMethod.POST,headers="Accept=application/json")
-    public @ResponseBody ResponseEntity<String> createLedger(@RequestParam String patientName, @RequestParam String patientId, @RequestParam String company) throws IOException {
-        //logger.info(requestEntity.getBody());
+    public @ResponseBody ResponseEntity<String> createLedger(@RequestParam String patientName, @RequestParam String patientId, @RequestParam(required = false) String company) throws IOException {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setContentType(MediaType.APPLICATION_JSON);
 
