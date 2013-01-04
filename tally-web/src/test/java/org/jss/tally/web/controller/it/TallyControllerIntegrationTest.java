@@ -2,6 +2,7 @@ package org.jss.tally.web.controller.it;
 
 import org.joda.time.DateTime;
 import org.jss.mocks.MockHttpClient;
+import org.jss.tally.utils.TallyResponseMother;
 import org.jss.tally.web.controller.TallyController;
 import org.jss.test.utils.ApplicationContextProvider;
 import org.jss.test.utils.MVCTestUtils;
@@ -18,7 +19,7 @@ import static org.springframework.test.web.server.result.MockMvcResultMatchers.s
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:applicationContext-Web.xml", "classpath*:applicationContext-Mocks.xml"})
-public class TallyControllerIntegrationIntegrationTest {
+public class TallyControllerIntegrationTest {
 
     @Autowired
     TallyController controller;
@@ -61,8 +62,7 @@ public class TallyControllerIntegrationIntegrationTest {
 
     @Test(expected = NestedServletException.class)
     public void shouldThrowExceptionIfApplicationThrowsIt() throws Exception {
-        ApplicationContext applicationContext = ApplicationContextProvider.getApplicationContext();
-        MockHttpClient httpClient = (MockHttpClient) applicationContext.getBean("httpClient");
+        MockHttpClient httpClient = contextHttpClient();
         httpClient.throwException(new RuntimeException("Exception from Tally call"));
 
         DefaultPatient patient = new DefaultPatient();
@@ -73,6 +73,30 @@ public class TallyControllerIntegrationIntegrationTest {
                         .param("company", patient.company)
                 );
     }
+
+    @Test(expected = NestedServletException.class)
+    public void shouldThrowExceptionWhenBadResultsComeFromTally() throws Exception {
+        MockHttpClient httpClient = contextHttpClient();
+        httpClient.setResult(TallyResponseMother.unsuccessfulTallyResponse());
+
+
+        DefaultPatient patient = new DefaultPatient();
+
+        MVCTestUtils.mockMvc(controller)
+                .perform(post("/tally/patient/create")
+                        .param("patientName", patient.patientName)
+                        .param("patientId", patient.patientId)
+                        .param("company", "")
+                )
+                .andExpect(status().isOk());
+
+    }
+
+    private MockHttpClient contextHttpClient() {
+        ApplicationContext applicationContext = ApplicationContextProvider.getApplicationContext();
+        return (MockHttpClient) applicationContext.getBean("httpClient");
+    }
+
 
     private class DefaultPatient {
         public  String patientName = "RamSingh" + DateTime.now().getMillis();

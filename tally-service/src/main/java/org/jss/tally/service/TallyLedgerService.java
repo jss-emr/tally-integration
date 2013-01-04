@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import org.jss.http.client.HttpClient;
 import org.jss.tally.builder.RequestBuilder;
 import org.jss.tally.domain.Ledger;
+import org.jss.tally.domain.TallyResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,8 @@ public class TallyLedgerService {
         }
         String requestXml = requestBuilder.buildNewLedgerRequest(ledger);
         String url = tallyServiceProperties.getProperty("tallyUrl");
-        httpClient.post(url, requestXml);
+        TallyResponse response = new TallyResponse(httpClient.post(url, requestXml));
+        if (!response.isSuccess()) throw new RuntimeException("Error creating patient" + response.getError());
     }
 
     private Ledger addDefaultCompanyInformation(Ledger ledger) {
