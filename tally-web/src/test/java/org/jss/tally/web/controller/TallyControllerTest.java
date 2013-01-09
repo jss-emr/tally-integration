@@ -45,4 +45,16 @@ public class TallyControllerTest{
         assertEquals(company,argument.getValue().getCompany());
 
     }
+    @Test
+    public void shouldReturnErrorIfParametersAreMissing() throws Exception {
+        controller = new TallyController(tallyLedgerService);
+
+        String name = "RamSingh"+ DateTime.now().getMillis();
+        String patientId = "";
+        String company = "JSS";
+        MVCTestUtils.mockMvc(controller).perform(post("/tally/patient/create").param("patientName", name).
+                param("patientId", patientId).param("company", company)).andExpect(status().isInternalServerError());
+
+
+    }
 }

@@ -15,6 +15,7 @@
     <modules>
         <module>tally-service</module>
         <module>tally-web</module>
+        <module>tally-service-stub</module>
     </modules>
     <repositories>
         <repository>
