@@ -21,7 +21,6 @@
                     <PARENT>Sundry Debtors</PARENT>
                     <ISBILLWISEON>Yes</ISBILLWISEON>
                     <AFFECTSSTOCK>Yes</AFFECTSSTOCK>
-                    <OPENINGBALANCE>0</OPENINGBALANCE>
                     <USEFORVAT>NO</USEFORVAT>
                     <TAXCLASSIFICATIONNAME></TAXCLASSIFICATIONNAME>
                 </LEDGER>
